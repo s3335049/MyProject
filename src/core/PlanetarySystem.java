@@ -15,7 +15,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import view.GameState;
+import states.GameState;
 
 public class PlanetarySystem extends BasicGameState{
 	private ArrayList<Planet> planets = new ArrayList<Planet>();
@@ -96,7 +96,7 @@ public class PlanetarySystem extends BasicGameState{
 			throws SlickException {
 		if(planets != null) {
 			for(Planet p: planets) {
-				p.render(gc, sbg, g, p);
+				p.render(gc, sbg, g);
 			}
 		}
 	}

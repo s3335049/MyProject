@@ -1,4 +1,4 @@
-package view;
+package states;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,7 +37,6 @@ public class MenuState extends BasicGameState implements MouseListener {
 	private String tick = "Tick: 0";
 	
 	private Sound menuSound;
-	private Music mainMusic;
 	
 	private MouseOverArea playButton;
 	private MouseOverArea settingsButton;
@@ -58,7 +57,6 @@ public class MenuState extends BasicGameState implements MouseListener {
 	settingsIMG = new Image("resources/settingsButton.png");
 	
 	menuSound = new Sound("resources/button-15.wav");
-	mainMusic = new Music("resources/starry_eyed.wav");
 	//mainMusic.loop();
 	
 	playButton = new MouseOverArea(gc, playIMG, 70, 200);
@@ -107,7 +105,6 @@ public class MenuState extends BasicGameState implements MouseListener {
 		}
 		*/
 		if(playButton.isMouseOver() == true && input.isMouseButtonDown(0) == true) {
-			mainMusic.fade(2, 0, true);
 			sbg.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 		//mouse = "Mouse coords:" + posX + " , " + posY;

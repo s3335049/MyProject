@@ -15,7 +15,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import view.GameWindow;
+import states.GameWindow;
 
 public class Galaxy extends BasicGameState{
 	
@@ -35,14 +35,21 @@ public class Galaxy extends BasicGameState{
 		return this.planetList;
 	}
 	
-	public void generatePlanetarySystems(GameContainer gc) {
+	public void generatePlanetarySystems(GameContainer gc, StateBasedGame sbg) {
 		for(int i = 0; i < this.numberOfPlanetarySystems; i++) {
 			//int random = MiscLib.newRandom(16);
 			this.planetarySystemsList.add(new PlanetarySystem("System", 10, 0, 0));
 			for(int j = 0; j < 9; j++) {
 				planetarySystemsList.get(i).addPlanet(new Planet(planetNames[MiscLib.newRandom(planetNames.length) - 1], new Faction("Domain", "Dominion", 0, Color.gray), null));
 				planetarySystemsList.get(i).getPlanet(j).setPlanetLocation(new Vector2f(planetarySystemsList.get(i).getVectorX() + (j * 75), planetarySystemsList.get(i).getVectorY() + (j * 75)));
-				planetarySystemsList.get(i).getPlanet(j).setMouseOverArea(gc, pImage, j * 75, j * 75);
+				planetarySystemsList.get(i).getPlanet(j).setParentSystem(planetarySystemsList.get(i));
+				planetarySystemsList.get(i).getPlanet(j).setRealX((int) (planetarySystemsList.get(i).getPlanet(j).getParentSystem().getVectorX() + (j * 75)));
+				planetarySystemsList.get(i).getPlanet(j).setRealY((int) (planetarySystemsList.get(i).getPlanet(j).getParentSystem().getVectorY() + (j * 75)));
+				try {
+					planetarySystemsList.get(i).getPlanet(j).init(gc, sbg);
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -69,8 +76,8 @@ public class Galaxy extends BasicGameState{
 		planetarySystemsList = new ArrayList<PlanetarySystem>();
 		pImage = new Image("resources/metallic.png");
 		readPlanetNamesFromFile();
-		generatePlanetarySystems(gc);
-		
+		generatePlanetarySystems(gc, sbg);
+
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

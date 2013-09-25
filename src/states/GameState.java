@@ -1,33 +1,21 @@
-package view;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+package states;
 
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import core.Faction;
+import view.DebugMode;
 import core.Galaxy;
-import core.Planet;
-import core.PlanetarySystem;
-import core.Ship;
-
 
 public class GameState extends BasicGameState{
 	
 	private static String[] planetNames;
 	
-	int stateID = 1;
+	private int stateID = 1;
 	private static int screenX;
 	private static int screenY;
 	DebugMode debugMode;

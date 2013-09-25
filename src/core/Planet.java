@@ -12,7 +12,7 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import view.GameState;
+import states.GameState;
 import view.ShipIndicator;
 
 public class Planet extends BasicGameState{
@@ -23,7 +23,9 @@ public class Planet extends BasicGameState{
 	private Faction planetOwner;
 	private int planetSize;
 	private int numberOfMoons;
+	private int realX, realY;
 	private PlanetType planetType;
+	private PlanetarySystem parentSystem;
 	private ArrayList<Structure> planetStructures = new ArrayList<Structure>();
 	private MouseOverArea area;
 	private boolean hasShips = false;
@@ -117,6 +119,8 @@ public class Planet extends BasicGameState{
 
 	public void setMouseOverArea(GameContainer gc, Image planetImage, int x, int y) {
 		area = new MouseOverArea(gc, planetImage, x, y);
+		this.realX = x;
+		this.realY = y;
 		area.setMouseOverColor(new Color(1,1,1,0.8f));
 	}
 	
@@ -140,6 +144,22 @@ public class Planet extends BasicGameState{
 		this.planetLocation = planetLocation;
 	}
 
+	public PlanetarySystem getParentSystem() {
+		return parentSystem;
+	}
+
+	public void setParentSystem(PlanetarySystem parentSystem) {
+		this.parentSystem = parentSystem;
+	}
+	
+	public void setRealX(int x) {
+		this.realX = x;
+	}
+	
+	public void setRealY(int y) {
+		this.realY = y;
+	}
+
 	public String toString() {
 		return this.planetName + " " + this.planetOwner + " " + this.planetType;
 		
@@ -148,21 +168,14 @@ public class Planet extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		ship = new Image("resources/ship.png");
+		planetImage = new Image("resources/metallic.png");
+		this.setMouseOverArea(gc, planetImage, realX, realY);
 		shipIndicator = new ShipIndicator(gc, ship, this.getMouseOverArea().getX() + 35 + GameState.getScreenX(), this.getMouseOverArea().getY() - 30 + GameState.getScreenY());
-		
-	}
-
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g, Planet p)
-			throws SlickException {
-		p.getMouseOverArea().setX(GameState.getScreenX() + p.getMouseOverArea().getX());
-		p.getMouseOverArea().setY(GameState.getScreenY() + p.getMouseOverArea().getY());
-		p.getMouseOverArea().render(gc, g);
-		g.drawString(this.getPlanetName(), this.getMouseOverArea().getX() + 5, this.getMouseOverArea().getY() + 50);
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-
+		
 	}
 
 	public int getID() {
@@ -176,5 +189,9 @@ public class Planet extends BasicGameState{
 			this.shipIndicator.setY(this.getMouseOverArea().getY() - 15 + this.shipIndicator.moveOffsetY());
 			shipIndicator.render(gc, g);
 		}
+		this.getMouseOverArea().render(gc, g);
+		this.getMouseOverArea().setX(realX + GameState.getScreenX());
+		this.getMouseOverArea().setY(realY + GameState.getScreenY());
+		g.drawString(this.getPlanetName(), this.getMouseOverArea().getX() + 5, this.getMouseOverArea().getY() + 50);
 	}
 }

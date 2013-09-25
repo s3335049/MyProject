@@ -8,6 +8,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import states.GameState;
+
 public class DebugMode extends BasicGameState{
 
 	private int tickCount;
@@ -65,11 +67,11 @@ public class DebugMode extends BasicGameState{
 	}
 	
 	public int getScreenX() {
-		return view.GameState.getScreenX();
+		return states.GameState.getScreenX();
 	}
 	
 	public int getScreenY() {
-		return view.GameState.getScreenY();
+		return states.GameState.getScreenY();
 	}
 
 }
