@@ -1,4 +1,4 @@
-package view;
+package gui;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;

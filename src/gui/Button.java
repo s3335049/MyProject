@@ -1,46 +1,16 @@
-package view;
+package gui;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.gui.MouseOverArea;
 
-import states.GameState;
-import core.Planet;
+public class Button extends MouseOverArea{
 
-/**
- * Paired with Fleet class to draw location to screen
- * 
- * @author kevin
- */
-public class ShipIndicator extends AbstractComponent {
 	
-	private Vector2f vectorDep;
-	private Vector2f vectorDest;
-	private Vector2f shipVector;
-	private float[] vectorDepPoint;
-	private float[] vectorDestPoint;
-	private float gradient;
-	private float moveOffsetX = 0, moveOffsetY = 0;
-	private Line planetLine;
-	private Line shipLine;
-	private boolean pathSet = false;
-	private boolean isDocked = true;
-	private Planet departure, arrival;
-	
-	public ShipIndicator(GUIContext container) {
-		super(container);
-		// TODO Auto-generated constructor stub
-	}
 
 	/** The default state */
 	private static final int NORMAL = 1;
@@ -95,114 +65,11 @@ public class ShipIndicator extends AbstractComponent {
 
 	/** True if the mouse has been up since last press */
 	private boolean mouseUp;
-
-	/**
-	 * Create a new mouse over area
-	 * 
-	 * @param container
-	 *            The container displaying the mouse over area
-	 * @param image
-	 *            The normalImage to display
-	 * @param x
-	 *            The position of the area
-	 * @param y
-	 *            the position of the area
-	 * @param listener
-	 *            A listener to add to the area
-	 */
-	public ShipIndicator(GUIContext container, Image image, int x, int y, ComponentListener listener) {
-		this(container, image, x, y, image.getWidth(), image.getHeight());
-		addListener(listener);
-	}
-
-	/**
-	 * Create a new mouse over area
-	 * 
-	 * @param container
-	 *            The container displaying the mouse over area
-	 * @param image
-	 *            The normalImage to display
-	 * @param x
-	 *            The position of the area
-	 * @param y
-	 *            the position of the area
-	 */
-	public ShipIndicator(GUIContext container, Image image, int x, int y) {
-		this(container, image, x, y, image.getWidth(), image.getHeight());
-	}
-
-	/**
-	 * Create a new mouse over area
-	 * 
-	 * @param container
-	 *            The container displaying the mouse over area
-	 * @param image
-	 *            The normalImage to display
-	 * @param x
-	 *            The position of the area
-	 * @param y
-	 *            the position of the area
-	 * @param width
-	 *            The width of the area
-	 * @param height
-	 *            The height of the area
-	 * @param listener
-	 *            A listener to add to the area
-	 */
-	public ShipIndicator(GUIContext container, Image image, int x, int y,
-			             int width, int height, ComponentListener listener) {
-		this(container,image,x,y,width,height);
-		addListener(listener);
-	}
-
-	/**
-	 * Create a new mouse over area
-	 * 
-	 * @param container
-	 *            The container displaying the mouse over area
-	 * @param image
-	 *            The normalImage to display
-	 * @param x
-	 *            The position of the area
-	 * @param y
-	 *            the position of the area
-	 * @param width
-	 *            The width of the area
-	 * @param height
-	 *            The height of the area
-	 */
-	public ShipIndicator(GUIContext container, Image image, int x, int y,
-			int width, int height) {
-		this(container,image,new Rectangle(x,y,width,height));
+	public Button(GUIContext container, Image image, int x, int y) {
+		super(container, image, x, y);
+		
 	}
 	
-	/**
-	 * Create a new mouse over area
-	 * 
-	 * @param container
-	 *            The container displaying the mouse over area
-	 * @param image
-	 *            The normalImage to display
-	 * @param shape
-	 *            The shape defining the area of the mouse sensitive zone
-	 */
-	public ShipIndicator(GUIContext container, Image image, Shape shape) {
-		super(container);
-
-		area = shape;
-		normalImage = image;
-		currentImage = image;
-		mouseOverImage = image;
-		mouseDownImage = image;
-
-		currentColor = normalColor;
-
-		state = NORMAL;
-		Input input = container.getInput();
-		over = area.contains(input.getMouseX(), input.getMouseY());
-		mouseDown = input.isMouseButtonDown(0);
-		updateImage();
-	}
 
 	/**
 	 * Moves the component.
@@ -457,79 +324,6 @@ public class ShipIndicator extends AbstractComponent {
 	 */
 	public void setLocation(int x, int y) {
 		setLocation((float) x,(float) y);
-	}
-	public void setPath(Planet departurePoint, Planet destination) {
-		this.departure = departurePoint;
-		this.arrival = destination;
-		vectorDepPoint = new float[2];
-		vectorDestPoint = new float[2];
-		shipVector = new Vector2f(this.getX(), this.getY());
-		if(departurePoint != null) {
-			vectorDepPoint[0] = (float) departurePoint.getMouseOverArea().getX() + GameState.getScreenX();
-			vectorDepPoint[1] = (float) departurePoint.getMouseOverArea().getY() + GameState.getScreenY();
-			vectorDestPoint[0] = (float) destination.getMouseOverArea().getX() + GameState.getScreenX();
-			vectorDestPoint[1] = (float) destination.getMouseOverArea().getY() + GameState.getScreenY();
-			vectorDep = new Vector2f(vectorDepPoint);
-			vectorDest = new Vector2f(vectorDestPoint);
-			setPlanetLine(new Line(vectorDep, vectorDest));
-			shipLine = new Line(0, 0);
-			gradient = (this.vectorDest.y - this.vectorDep.y) / (this.vectorDest.x - this.vectorDep.x);
-			moveOffsetX -= this.getX() - departurePoint.getMouseOverArea().getX();
-			moveOffsetY -= this.getY() - departurePoint.getMouseOverArea().getY();
-			this.pathSet = true;
-		}
-	}
-
-	public void move() {
-		if(this.pathSet == true) {
-			shipVector.set(this.getX(), this.getY());
-			moveOffsetX += 1 / gradient;
-			moveOffsetY += gradient;
-		}
-		shipLine.set(shipVector, vectorDest);
-		if(shipLine.length() < 10) {
-			arrival.setHasShips(true);
-		}
-	}
-	
-	public float moveOffsetX() {
-		return moveOffsetX;
-	}
-	
-	public float moveOffsetY() {
-		return moveOffsetY;
-	}
-	
-	public Line getShipLine() {
-		return shipLine;
-	}
-	
-	public void setShipLine(Line line) {
-		this.shipLine = line;
-	}
-	
-	public Line getPlanetLine() {
-		return planetLine;
-	}
-
-	public void setPlanetLine(Line planetLine) {
-		this.planetLine = planetLine;
-	}
-
-	public float getGradient() {
-		return (this.vectorDest.y - this.vectorDep.y) / (this.vectorDest.x - this.vectorDep.x);
-	}
-	
-	public boolean isPathSet() {
-		return this.pathSet;
-	}
-
-	public boolean isDocked() {
-		return isDocked;
-	}
-
-	public void setDocked(boolean isDocked) {
-		this.isDocked = isDocked;
 	}
 
 }

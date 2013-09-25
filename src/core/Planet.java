@@ -1,5 +1,7 @@
 package core;
 
+import gui.ShipIndicator;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -13,7 +15,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import states.GameState;
-import view.ShipIndicator;
 
 public class Planet extends BasicGameState{
 	
