@@ -1,13 +1,15 @@
 package gui;
 
+import org.newdawn.slick.Image;
+
 public class PlanetScreen {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	private Image planetScreen;
+	private Button exitButton;
+	private int screenX, screenY;
+	
+	public PlanetScreen(int screenX, int screenY) {
+		
 	}
 
 }

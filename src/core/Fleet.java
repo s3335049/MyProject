@@ -2,6 +2,7 @@ package core;
 
 import gui.ShipIndicator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
@@ -11,7 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Fleet extends BasicGameState {
+public class Fleet extends BasicGameState implements Serializable{
 
 	private String fleetName;
 	private ArrayList<FleetElement> shipList;

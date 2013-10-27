@@ -2,8 +2,10 @@ package core;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -17,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import states.GameWindow;
 
-public class Galaxy extends BasicGameState{
+public class Galaxy extends BasicGameState {
 	
 	private int numberOfRaces;
 	private ArrayList<Planet> planetList;
@@ -69,6 +71,10 @@ public class Galaxy extends BasicGameState{
         	//System.out.print(planetNames[i] + " ");
         }
         //System.out.print(planetNames.length);
+	}
+	
+	public static void save() {
+		
 	}
 
 	public void init(GameContainer gc, StateBasedGame sbg)

@@ -21,7 +21,6 @@ public class GameState extends BasicGameState{
 	private static int screenY;
 	DebugMode debugMode;
 	private boolean enabled = true;
-
 	private Image creditsGUI;
 	private Galaxy galaxy;
 	

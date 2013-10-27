@@ -68,7 +68,7 @@ public class MenuState extends BasicGameState implements MouseListener {
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		background.draw(0,0);
+		//background.draw(0,0);
 		playButton.render(gc, g);
 		settingsButton.render(gc, g);
 		

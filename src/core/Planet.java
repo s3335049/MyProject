@@ -1,7 +1,9 @@
 package core;
 
+import gui.PlanetScreen;
 import gui.ShipIndicator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -16,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import states.GameState;
 
-public class Planet extends BasicGameState{
+public class Planet extends BasicGameState {
 	
 	private String planetName;
 	private String systemName;
@@ -32,11 +34,11 @@ public class Planet extends BasicGameState{
 	private boolean hasShips = false;
 	private Vector2f planetLocation;
 	String test = "";
-	
+	private Image planetImage;	
 	private Image ship;
 	private ShipIndicator shipIndicator;
-	
-	private Image planetImage;
+	private PlanetScreen planetScreen;
+
 
 	public Planet(String planetName, Faction planetOwner, PlanetType planetType) {
 		this.planetName = planetName;

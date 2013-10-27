@@ -289,7 +289,7 @@ public class Button extends MouseOverArea{
 	public void mouseReleased(int button, int mx, int my) {
 		over = area.contains(mx, my);
 		if (button == 0) {
-			mouseDown = false; 
+			mouseDown = false;
 		}
 	}
 
