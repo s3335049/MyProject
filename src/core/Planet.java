@@ -1,43 +1,48 @@
 package core;
 
-import gui.PlanetScreen;
 import gui.ShipIndicator;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import states.GameState;
+import gui.PlanetScreen;
 
 public class Planet extends BasicGameState {
+	private PlanetScreen planetScreen;
+	private boolean isPlanetScreenActive = false;
 	
 	private String planetName;
 	private String systemName;
 	private String starOrbiting;
 	private Faction planetOwner;
+	private PlanetType planetType;
 	private int planetSize;
 	private int numberOfMoons;
-	private int realX, realY;
-	private PlanetType planetType;
-	private PlanetarySystem parentSystem;
+	private int population;
 	private ArrayList<Structure> planetStructures = new ArrayList<Structure>();
-	private MouseOverArea area;
+	
+	private int realX, realY;
+
+	private PlanetarySystem parentSystem;
+
 	private boolean hasShips = false;
 	private Vector2f planetLocation;
 	String test = "";
-	private Image planetImage;	
+	
 	private Image ship;
 	private ShipIndicator shipIndicator;
-	private PlanetScreen planetScreen;
+	
+	private Image planetImage;
 
 
 	public Planet(String planetName, Faction planetOwner, PlanetType planetType) {
@@ -120,17 +125,6 @@ public class Planet extends BasicGameState {
 		this.hasShips = hasShips;
 	}
 
-	public void setMouseOverArea(GameContainer gc, Image planetImage, int x, int y) {
-		area = new MouseOverArea(gc, planetImage, x, y);
-		this.realX = x;
-		this.realY = y;
-		area.setMouseOverColor(new Color(1,1,1,0.8f));
-	}
-	
-	public MouseOverArea getMouseOverArea() {
-		return area;
-	}
-	
 	public ShipIndicator getShipIndicator() {
 		return shipIndicator;
 	}
@@ -167,18 +161,35 @@ public class Planet extends BasicGameState {
 		return this.planetName + " " + this.planetOwner + " " + this.planetType;
 		
 	}
+	
+	public boolean isPlanetScreenActive() {
+		return isPlanetScreenActive ;
+	}
 
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		ship = new Image("resources/ship.png");
 		planetImage = new Image("resources/metallic.png");
-		this.setMouseOverArea(gc, planetImage, realX, realY);
-		shipIndicator = new ShipIndicator(gc, ship, this.getMouseOverArea().getX() + 35 + GameState.getScreenX(), this.getMouseOverArea().getY() - 30 + GameState.getScreenY());
+		planetImage.getGraphics().setClip(realX, realX, 50, 50);
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		
+		if(planetImage.getGraphics().getClip().contains(Mouse.getX() - GameState.getScreenX(), Math.abs(Mouse.getY() - 900) - GameState.getScreenY()) && gc.getGraphics().getPixel(Mouse.getX(), Math.abs(Mouse.getY() - 900)).getAlpha() > 0) {
+			planetImage.setAlpha(0.4f);
+		}
+		else {
+			planetImage.setAlpha(1.0f);
+		}
+		if(planetImage.getGraphics().getClip().contains(Mouse.getX() - GameState.getScreenX(), Math.abs(Mouse.getY() - 900) - GameState.getScreenY()) && gc.getGraphics().getPixel(Mouse.getX(), Math.abs(Mouse.getY() - 900)).getAlpha() > 0 && Mouse.isButtonDown(0) && isPlanetScreenActive == false) {
+			System.out.print("LOL");
+			isPlanetScreenActive = true;
+			planetScreen = new PlanetScreen(800, 300);
+		}
+		if(isPlanetScreenActive == true) {
+			planetScreen.update(gc, sbg, delta);
+		}
+
 	}
 
 	public int getID() {
@@ -187,14 +198,16 @@ public class Planet extends BasicGameState {
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
+		if(this.isPlanetScreenActive == true) {
+			planetScreen.setPlanetName(this.planetName);
+			planetScreen.render(gc, sbg, g);
+		}
 		if(hasShips == true) {
-			this.shipIndicator.setX(this.getMouseOverArea().getX() + 35 + this.shipIndicator.moveOffsetX());
-			this.shipIndicator.setY(this.getMouseOverArea().getY() - 15 + this.shipIndicator.moveOffsetY());
+			//this.shipIndicator.setX(this.getMouseOverArea().getX() + 35 + this.shipIndicator.moveOffsetX());
+			//this.shipIndicator.setY(this.getMouseOverArea().getY() - 15 + this.shipIndicator.moveOffsetY());
 			shipIndicator.render(gc, g);
 		}
-		this.getMouseOverArea().render(gc, g);
-		this.getMouseOverArea().setX(realX + GameState.getScreenX());
-		this.getMouseOverArea().setY(realY + GameState.getScreenY());
-		g.drawString(this.getPlanetName(), this.getMouseOverArea().getX() + 5, this.getMouseOverArea().getY() + 50);
+		this.planetImage.draw(realX + GameState.getScreenX(), realY + GameState.getScreenY());
+		g.drawString(this.getPlanetName(), this.realX + 5 + GameState.getScreenX(), this.realY + 50 + GameState.getScreenY());
 	}
 }

@@ -49,7 +49,7 @@ public class Fleet extends BasicGameState implements Serializable{
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		shipImage = new Image("resources/ship.png");
-		shipIndicator = new ShipIndicator(gc, shipImage, location.getMouseOverArea().getX(), location.getMouseOverArea().getY());
+		//shipIndicator = new ShipIndicator(gc, shipImage, location.getMouseOverArea().getX(), location.getMouseOverArea().getY());
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)

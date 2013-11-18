@@ -465,17 +465,17 @@ public class ShipIndicator extends AbstractComponent {
 		vectorDestPoint = new float[2];
 		shipVector = new Vector2f(this.getX(), this.getY());
 		if(departurePoint != null) {
-			vectorDepPoint[0] = (float) departurePoint.getMouseOverArea().getX() + GameState.getScreenX();
-			vectorDepPoint[1] = (float) departurePoint.getMouseOverArea().getY() + GameState.getScreenY();
-			vectorDestPoint[0] = (float) destination.getMouseOverArea().getX() + GameState.getScreenX();
-			vectorDestPoint[1] = (float) destination.getMouseOverArea().getY() + GameState.getScreenY();
+			//vectorDepPoint[0] = (float) departurePoint.getMouseOverArea().getX() + GameState.getScreenX();
+			//vectorDepPoint[1] = (float) departurePoint.getMouseOverArea().getY() + GameState.getScreenY();
+			//vectorDestPoint[0] = (float) destination.getMouseOverArea().getX() + GameState.getScreenX();
+			//vectorDestPoint[1] = (float) destination.getMouseOverArea().getY() + GameState.getScreenY();
 			vectorDep = new Vector2f(vectorDepPoint);
 			vectorDest = new Vector2f(vectorDestPoint);
 			setPlanetLine(new Line(vectorDep, vectorDest));
 			shipLine = new Line(0, 0);
 			gradient = (this.vectorDest.y - this.vectorDep.y) / (this.vectorDest.x - this.vectorDep.x);
-			moveOffsetX -= this.getX() - departurePoint.getMouseOverArea().getX();
-			moveOffsetY -= this.getY() - departurePoint.getMouseOverArea().getY();
+			//moveOffsetX -= this.getX() - departurePoint.getMouseOverArea().getX();
+			//moveOffsetY -= this.getY() - departurePoint.getMouseOverArea().getY();
 			this.pathSet = true;
 		}
 	}
