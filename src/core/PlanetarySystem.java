@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -17,13 +18,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import states.GameState;
 
-public class PlanetarySystem extends BasicGameState{
+public class PlanetarySystem extends BasicGameState {
 	private ArrayList<Planet> planets = new ArrayList<Planet>();
 	private String systemName;
 	private int numberOfPlanets;
 	private Vector2f systemLocation;
 	private float vectorX, vectorY;
 	private ArrayList<Planet> psList = null;
+	private Star systemStar;
 	
 	public PlanetarySystem(String systemName, int numberOfPlanets, float x, float y) {
 		this.systemName = systemName;
@@ -103,9 +105,7 @@ public class PlanetarySystem extends BasicGameState{
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		for(int i = 0; i < planets.size(); i++) {
-			planets.get(i).update(gc, sbg, delta);
-		}
+		
 	}
 
 	public int getID() {
