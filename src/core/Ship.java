@@ -80,7 +80,7 @@ public class Ship {
 	public void SettlePlanet(boolean isPlanetOwned, boolean outpostModule, Planet planet) {
 		if(isPlanetOwned == false && outpostModule == true) {
 			planet.setPlanetOwner(shipOwner);
-			planet.getMouseOverArea().setNormalColor(planet.getPlanetOwner().getColor());
+			//planet.getMouseOverArea().setNormalColor(planet.getPlanetOwner().getColor());
 		}
 	}
 }
