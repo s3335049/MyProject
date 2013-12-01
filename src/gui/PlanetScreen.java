@@ -56,7 +56,7 @@ public class PlanetScreen extends BasicGameState{
 	}
 
 	public void initScreenImages() throws SlickException {
-		screenImage = new Image("resources/planetScreen.png"); //640 x 480
+		screenImage = new Image("resources/planetScreen.png", false, 2); //640 x 480
 		planetImage = new Image("resources/metallic.png"); //50 x 50
 		exit = new Image("resources/exitButtonX20px-20px.png");
 		exit.getGraphics().setClip(screenX + 605, screenY + 15, 20, 20);

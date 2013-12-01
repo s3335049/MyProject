@@ -19,7 +19,6 @@ public class GameState extends BasicGameState{
 	public final int SCREEN_MAX_Y = 900;
 	private int yBias, yBias2;
 	private static String[] planetNames;
-	private TextField textField;
 	private int stateID = 1;
 	private static int screenX;
 	private static int screenY;
@@ -29,7 +28,7 @@ public class GameState extends BasicGameState{
 	private Galaxy galaxy;
 	private Image planet, planet2;
 	private Color color;
-	private TrueTypeFont font;
+	private TrueTypeFont font, font2;
 	private boolean antiAlias = true;
 	GameState(int stateID) {
 		this.stateID = stateID;
@@ -37,9 +36,10 @@ public class GameState extends BasicGameState{
 
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+		Font awtFont = new Font("Times New Roman", Font.PLAIN, 12);
 		font = new TrueTypeFont(awtFont, antiAlias);
-		planet = new Image("resources/metallic.png");
+		font2 = new TrueTypeFont(awtFont, antiAlias);
+		planet = new Image("resources/metallic.png", false, 2);
 		planet2 = new Image("resources/metallic.png");
 		creditsGUI = new Image("resources/credits-gui.png");
 		debugMode = new DebugMode();
@@ -54,8 +54,10 @@ public class GameState extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		font.drawString(700, 700, "TESTING NIGGER", Color.green);
-		planet.draw(700 + screenX, 700 + screenY);
-		planet2.draw(1100 + screenX, 540 + screenY);
+		font2.drawString(700, 680, "LOLOLOLOLOLOLO", Color.green);
+		//System.out.print(font2.getWidth("LOLOLOLOLOLOLO")); GETS WIDTH IN PIXELS
+		planet.draw(700 + screenX, 700 + screenY, 50f, 50f);
+		planet2.draw(1100 + screenX, 540 + screenY, 50f, 50f);
 		if(planet.getGraphics().getClip().contains(Mouse.getX() - screenX, Math.abs(Mouse.getY() - SCREEN_MAX_Y) - screenY) && gc.getGraphics().getPixel(Mouse.getX(), Mouse.getY() + yBias).getAlpha() > 0) {
 			planet.setAlpha(0.4f);
 		}
